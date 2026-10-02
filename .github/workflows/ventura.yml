@@ -1,0 +1,20 @@
+name: Build fuer Ventura
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fuer Ventura anpassen
+        run: |
+          sed -i '' 's/14\.0/13.0/g' build.sh
+          sed -i '' 's/^MACOS_MIN := 14\.0/MACOS_MIN := 13.0/' Makefile
+          sed -i '' -E 's/(\.onChange\(of: [^)]*\)) \{ _, ([A-Za-z_]+) in/\1 { \2 in/' AirCardApp.swift
+      - name: Bauen
+        run: |
+          chmod +x build.sh
+          ./build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AirCard-Ventura
+          path: build/AirCard.dmg
