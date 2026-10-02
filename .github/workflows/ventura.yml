@@ -10,6 +10,8 @@ jobs:
           sed -i '' 's/14\.0/13.0/g' build.sh
           sed -i '' 's/^MACOS_MIN := 14\.0/MACOS_MIN := 13.0/' Makefile
           sed -i '' -E 's/(\.onChange\(of: [^)]*\)) \{ _, ([A-Za-z_]+) in/\1 { \2 in/' AirCardApp.swift
+          sed -i '' 's#"/usr/bin/python3",#"/usr/local/bin/python3", "/usr/bin/python3",#' AirCardApp.swift
+
       - name: Bauen
         run: |
           chmod +x build.sh
